@@ -20,6 +20,7 @@ object Versions {
     const val RETROFIT_GSON = "2.0.0"
 
     const val OKHTTP3 = "4.11.0"
+    const val CHUCKER = "4.0.0"
 
     const val JUNIT4 = "4.13.2"
     const val ESPRESSO = "3.5.1"

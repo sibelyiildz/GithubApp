@@ -1,6 +1,7 @@
 package com.example.githubapp.di
 
 import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.example.githubapp.BuildConfig
 import com.example.githubapp.data.remote.RemoteDataSource
 import com.example.githubapp.data.remote.RemoteDataSourceImp
@@ -42,6 +43,7 @@ interface NetworkModule {
                 .writeTimeout(2, TimeUnit.MINUTES)
                 .readTimeout(2, TimeUnit.MINUTES)
                 .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                .addInterceptor(ChuckerInterceptor(context))
                 .build()
         }
 

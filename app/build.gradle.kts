@@ -73,6 +73,7 @@ dependencies {
     implementation(Dependencies.RETROFIT_GSON)
 
     implementation(Dependencies.OKHTTP_LOGGER)
+    implementation(Dependencies.CHUCKER)
 
     implementation(Dependencies.COROUTINES_ANDROID)
 
