@@ -1,25 +1,36 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
+    id("androidx.navigation.safeargs.kotlin")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
-    namespace = "com.example.githubapp"
-    compileSdk = 34
+    namespace = Configs.NAME_SPACE
+    compileSdk = Configs.COMPILE_SDK_VERSION
 
     defaultConfig {
-        applicationId = "com.example.githubapp"
-        minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = Configs.APPLICATION_ID
+        minSdk = Configs.MIN_SDK_VERSION
+        targetSdk = Configs.TARGET_SDK_VERSION
+        versionCode = Configs.VERSION_CODE
+        versionName = Configs.VERSION_NAME
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = Configs.TEST_INSTRUMENTATION_RUNNER
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://api.github.com/\"")
+            buildConfigField("String", "DB_NAME", "\"github.db\"")
+            versionNameSuffix = "-dev"
+        }
         release {
-            isMinifyEnabled = false
+            buildConfigField("String", "BASE_URL", "\"https://api.github.com/\"")
+            buildConfigField("String", "DB_NAME", "\"github.db\"")
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -33,15 +44,45 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
 }
 
 dependencies {
+    implementation(Dependencies.CORE_KTX)
+    implementation(Dependencies.APP_COMPAT)
+    implementation(Dependencies.MATERIAL)
+    implementation(Dependencies.CONSTRAINT)
+    implementation(Dependencies.LIFECYCLE_LIVEDATA)
+    implementation(Dependencies.LIFECYCLE_VIEW_MODEL)
+    implementation(Dependencies.SUPPORT_LEGACY)
+    testImplementation(Dependencies.JUNIT)
+    androidTestImplementation(Dependencies.TEST_EXT)
+    androidTestImplementation(Dependencies.ESPRESSO)
 
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation(Dependencies.NAVIGATION_FRAGMENT)
+    implementation(Dependencies.NAVIGATION_UI)
+
+    implementation(Dependencies.GLIDE)
+
+    implementation(Dependencies.RETROFIT)
+
+    implementation(Dependencies.GSON)
+    implementation(Dependencies.RETROFIT_GSON)
+
+    implementation(Dependencies.OKHTTP_LOGGER)
+
+    implementation(Dependencies.COROUTINES_ANDROID)
+
+    implementation(Dependencies.HILT_ANDROID)
+    kapt(Dependencies.HILT_COMPILER)
+
+    implementation(Dependencies.LOTTIE)
+
+    implementation(Dependencies.ROOM_RUNTIME)
+    implementation(Dependencies.ROOM_KTX)
+    annotationProcessor(Dependencies.ROOM_COMPILER)
+    kapt(Dependencies.ROOM_COMPILER)
 }
