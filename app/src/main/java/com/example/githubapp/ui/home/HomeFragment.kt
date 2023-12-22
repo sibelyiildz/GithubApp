@@ -6,8 +6,9 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import com.example.githubapp.base.BaseFragment
-import com.example.githubapp.data.remote.model.SearchResponse
+import com.example.githubapp.data.remote.model.SearchItemResponse
 import com.example.githubapp.databinding.FragmentHomeBinding
+import com.example.githubapp.extension.errorDialog
 import com.example.githubapp.util.UIState
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,13 +25,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         viewModel.users.observe(viewLifecycleOwner, ::usersObserver)
     }
 
-    private fun usersObserver(response: UIState<SearchResponse>) {
+    private fun usersObserver(response: UIState<List<SearchItemResponse>>) {
+        setLoading(response is UIState.Loading)
         when (response) {
             is UIState.Success -> {
                 Log.v("LogTag", "response -> ${response.data}")
             }
 
             is UIState.Error -> {
+                errorDialog {
+                    setMessage(response.error.message)
+                }
                 Log.v("LogTag", "Failure -> ${response.error}")
             }
 
