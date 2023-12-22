@@ -6,8 +6,8 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import com.example.githubapp.base.BaseFragment
-import com.example.githubapp.data.remote.model.UserItemResponse
 import com.example.githubapp.databinding.FragmentHomeBinding
+import com.example.githubapp.domain.model.UserItemModel
 import com.example.githubapp.extension.attach
 import com.example.githubapp.extension.detach
 import com.example.githubapp.extension.errorDialog
@@ -19,19 +19,26 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
     private val viewModel: HomeViewModel by viewModels()
-    private val adapter by lazy { UsersAdapter() }
+    private val adapter by lazy { UsersAdapter(::onHandleAdapterEvents) }
     private val itemDecoration by lazy { linearDivider() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.usersRecyclerView.attach(adapter, itemDecoration)
-        binding.searchView.setOnQueryTextListener(searchQueryTextListener)
+        initialize()
 
         viewModel.users.observe(viewLifecycleOwner, ::usersObserver)
+        viewModel.userFavoriteTransactions.observe(
+            viewLifecycleOwner,
+            ::userFavoriteTransactionsObserver
+        )
     }
 
-    private fun usersObserver(response: UIState<List<UserItemResponse>>) {
+    private fun initialize() {
+        binding.usersRecyclerView.attach(adapter, itemDecoration)
+        binding.searchView.setOnQueryTextListener(searchQueryTextListener)
+    }
+
+    private fun usersObserver(response: UIState<List<UserItemModel>>) {
         setLoading(response is UIState.Loading)
         when (response) {
             is UIState.Success -> {
@@ -48,6 +55,39 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
             is UIState.Loading -> {
                 Log.v("LogTag", "Loading ")
+            }
+        }
+    }
+
+    private fun userFavoriteTransactionsObserver(response: UIState<Pair<UserItemModel, Boolean>>) {
+        setLoading(response is UIState.Loading)
+        when (response) {
+            is UIState.Success -> {
+                response.data?.let {
+                    adapter.updateItem(it.first, it.second)
+                }
+            }
+
+            is UIState.Error -> {
+                errorDialog {
+                    setMessage(response.error.message)
+                }
+            }
+
+            is UIState.Loading -> {}
+        }
+
+    }
+
+
+    private fun onHandleAdapterEvents(event: UsersAdapter.Event) {
+        when (event) {
+            is UsersAdapter.Event.AddFavorite -> {
+                viewModel.addUserToFavorite(event.user)
+            }
+
+            is UsersAdapter.Event.RemoveFavorite -> {
+                viewModel.remoteUserFromFavorite(event.user)
             }
         }
     }

@@ -7,18 +7,18 @@ import com.example.githubapp.util.Result
 import javax.inject.Inject
 
 
-class SearchUsersUseCase @Inject constructor(
+class AddFavoriteUseCase @Inject constructor(
     private val repository: Repository,
-) : BaseUseCase<SearchUsersUseCase.Request, List<UserItemModel>>() {
+) : BaseUseCase<AddFavoriteUseCase.Request, Unit>() {
 
-    override suspend fun execute(request: Request): Result<List<UserItemModel>> {
+    override suspend fun execute(request: Request): Result<Unit> {
         return try {
-            Result.Success(repository.getUsers(keyword = request.keyword))
+            Result.Success(repository.insertFavorite(userItemModel = request.userItem))
         } catch (e: Exception) {
             Result.Failure(e)
         }
     }
 
-    data class Request(val keyword: String)
+    data class Request(val userItem: UserItemModel)
 
 }

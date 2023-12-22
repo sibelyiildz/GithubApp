@@ -2,6 +2,8 @@ package com.example.githubapp.extension
 
 import android.graphics.drawable.InsetDrawable
 import androidx.annotation.DimenRes
+import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -43,3 +45,6 @@ fun RecyclerView.detach() {
     removeItemDecoration(getItemDecorationAt(0))
     clearOnScrollListeners()
 }
+
+fun RecyclerView.ViewHolder.getDrawable(@DrawableRes id: Int) =
+    AppCompatResources.getDrawable(itemView.context, id)

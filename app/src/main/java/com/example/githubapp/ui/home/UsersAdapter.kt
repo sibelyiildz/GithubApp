@@ -5,25 +5,28 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.githubapp.data.remote.model.UserItemResponse
+import com.example.githubapp.R
 import com.example.githubapp.databinding.ListItemUserBinding
+import com.example.githubapp.domain.model.UserItemModel
+import com.example.githubapp.extension.getDrawable
 import com.example.githubapp.extension.setImageUrl
 
-class UsersAdapter : ListAdapter<UserItemResponse, UsersAdapter.ViewHolder>(DIFF) {
+class UsersAdapter(private val events: (Event) -> Unit) :
+    ListAdapter<UserItemModel, UsersAdapter.ViewHolder>(DIFF) {
     companion object {
-        private val DIFF = object : DiffUtil.ItemCallback<UserItemResponse>() {
+        private val DIFF = object : DiffUtil.ItemCallback<UserItemModel>() {
             override fun areItemsTheSame(
-                oldItem: UserItemResponse,
-                newItem: UserItemResponse
+                oldItem: UserItemModel,
+                newItem: UserItemModel
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: UserItemResponse,
-                newItem: UserItemResponse
+                oldItem: UserItemModel,
+                newItem: UserItemModel
             ): Boolean {
-                return oldItem == newItem
+                return oldItem.isFavorite == newItem.isFavorite
             }
         }
     }
@@ -40,14 +43,37 @@ class UsersAdapter : ListAdapter<UserItemResponse, UsersAdapter.ViewHolder>(DIFF
         holder.bindData(currentList[position])
     }
 
+
+    fun updateItem(user: UserItemModel, isFavorite: Boolean) {
+        currentList.find { it.id == user.id }?.isFavorite = isFavorite
+        notifyItemChanged(currentList.indexOf(currentList.find { it.id == user.id }))
+    }
+
     inner class ViewHolder(private val binding: ListItemUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindData(data: UserItemResponse) {
+        fun bindData(data: UserItemModel) {
             with(binding) {
                 userImage.setImageUrl(root.context, data.avatarUrl)
                 userName.text = data.login
+                favoriteIcon.setImageDrawable(
+                    if (data.isFavorite) getDrawable(R.drawable.ic_star_filled) else getDrawable(
+                        R.drawable.ic_star
+                    )
+                )
+
+                favoriteIcon.setOnClickListener {
+                    events.invoke(
+                        if (data.isFavorite) Event.RemoveFavorite(data) else Event.AddFavorite(
+                            data
+                        )
+                    )
+                }
             }
         }
     }
 
+    sealed class Event {
+        data class AddFavorite(val user: UserItemModel) : Event()
+        data class RemoveFavorite(val user: UserItemModel) : Event()
+    }
 }
