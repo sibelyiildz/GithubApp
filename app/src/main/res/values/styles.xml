@@ -12,4 +12,10 @@
         <item name="android:editTextColor">@color/grey</item>
     </style>
 
+
+    <style name="ShapeAppearance.ShapeableImageView.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>

@@ -3,7 +3,7 @@ package com.example.githubapp.ui.home
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.githubapp.data.remote.model.SearchItemResponse
+import com.example.githubapp.data.remote.model.UserItemResponse
 import com.example.githubapp.domain.usecase.SearchUsersUseCase
 import com.example.githubapp.extension.setThreadingValue
 import com.example.githubapp.extension.toLiveData
@@ -18,7 +18,7 @@ class HomeViewModel @Inject constructor(
     private val searchUsersUseCase: SearchUsersUseCase
 ) : ViewModel() {
 
-    private val _users = MutableLiveData<UIState<List<SearchItemResponse>>>()
+    private val _users = MutableLiveData<UIState<List<UserItemResponse>>>()
     val users = _users.toLiveData()
 
     fun searchUsers(keyword: String) {
