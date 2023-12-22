@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Github.SearchView" parent="Widget.AppCompat.SearchView">
+        <item name="android:background">@drawable/bg_white_rounded</item>
+        <item name="queryBackground">@drawable/bg_white_rounded</item>
+        <item name="submitBackground">@drawable/bg_white_rounded</item>
+        <item name="closeIcon">@drawable/ic_close_search</item>
+        <item name="searchIcon">@drawable/ic_search_icon</item>
+        <item name="iconifiedByDefault">false</item>
+        <item name="android:elevation">@dimen/margin4</item>
+        <item name="android:editTextColor">@color/grey</item>
+    </style>
+
+</resources>
