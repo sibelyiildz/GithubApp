@@ -11,4 +11,5 @@ data class UserItemResponse(
     val id: Int,
     @SerializedName("avatar_url")
     val avatarUrl: String,
+    val isFavorite: Boolean = false
 )

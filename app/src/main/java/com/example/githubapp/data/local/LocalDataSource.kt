@@ -4,6 +4,10 @@ import com.example.githubapp.domain.model.UserItemModel
 
 interface LocalDataSource {
 
+    suspend fun insertAllUsers(userItems: List<UserItemModel>)
+
+    suspend fun getUsers(userName: String): List<UserItemModel>
+
     suspend fun insertFavorite(userItemModel: UserItemModel)
 
     suspend fun deleteFavorite(userItemModel: UserItemModel)

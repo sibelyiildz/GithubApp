@@ -1,5 +1,6 @@
 package com.example.githubapp.data.repository
 
+import android.util.Log
 import com.example.githubapp.data.local.LocalDataSource
 import com.example.githubapp.data.remote.RemoteDataSource
 import com.example.githubapp.domain.model.UserDetailModel
@@ -13,7 +14,15 @@ class RepositoryImp @Inject constructor(
 ) : Repository {
 
     override suspend fun getUsers(keyword: String): List<UserItemModel> {
-        return remoteDataSource.getUsers(keyword)
+        var users = listOf<UserItemModel>()
+        // TODO: try-catch yerine başka bir şey kullan
+        try {
+            users = remoteDataSource.getUsers(keyword)
+        } catch (e: Exception) {
+            Log.v("LogTag", "$e")
+        }
+        localDataSource.insertAllUsers(users)
+        return localDataSource.getUsers(keyword)
     }
 
     override suspend fun getUserDetail(username: String): UserDetailModel {
