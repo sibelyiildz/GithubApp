@@ -24,5 +24,12 @@ class RepositoryImp @Inject constructor(
         localDataSource.insertFavorite(userItemModel)
     }
 
+    override suspend fun deleteFavorite(userItemModel: UserItemModel) {
+        localDataSource.deleteFavorite(userItemModel)
+    }
+
+    override suspend fun getAllFavoriteUsers(): List<UserItemModel> {
+        return localDataSource.getAllFavoriteUsers()
+    }
 
 }

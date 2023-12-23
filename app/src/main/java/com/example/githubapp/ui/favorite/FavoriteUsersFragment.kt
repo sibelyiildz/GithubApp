@@ -1,25 +1,26 @@
-package com.example.githubapp.ui.home
+package com.example.githubapp.ui.favorite
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.githubapp.NavGraphDirections
 import com.example.githubapp.base.BaseFragment
-import com.example.githubapp.databinding.FragmentHomeBinding
+import com.example.githubapp.databinding.FragmentFavoriteUsersBinding
 import com.example.githubapp.domain.model.UserItemModel
 import com.example.githubapp.extension.attach
 import com.example.githubapp.extension.detach
 import com.example.githubapp.extension.errorDialog
 import com.example.githubapp.extension.linearDivider
+import com.example.githubapp.ui.home.UsersAdapter
 import com.example.githubapp.util.UIState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
+class FavoriteUsersFragment :
+    BaseFragment<FragmentFavoriteUsersBinding>(FragmentFavoriteUsersBinding::inflate) {
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: FavoriteUsersViewModel by viewModels()
     private val adapter by lazy { UsersAdapter(::onHandleAdapterEvents) }
     private val itemDecoration by lazy { linearDivider() }
 
@@ -27,7 +28,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         super.onViewCreated(view, savedInstanceState)
         initialize()
 
-        viewModel.users.observe(viewLifecycleOwner, ::usersObserver)
+        viewModel.favoriteUsers.observe(viewLifecycleOwner, ::favoriteUsersObserver)
         viewModel.userFavoriteTransactions.observe(
             viewLifecycleOwner,
             ::userFavoriteTransactionsObserver
@@ -36,13 +37,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun initialize() {
         binding.usersRecyclerView.attach(adapter, itemDecoration)
-        binding.searchView.setOnQueryTextListener(searchQueryTextListener)
-        binding.favoritesButton.setOnClickListener {
-            findNavController().navigate(NavGraphDirections.actionFavoriteUsersFragment())
-        }
     }
 
-    private fun usersObserver(response: UIState<List<UserItemModel>>) {
+    private fun favoriteUsersObserver(response: UIState<List<UserItemModel>>) {
         setLoading(response is UIState.Loading)
         when (response) {
             is UIState.Success -> {
@@ -55,8 +52,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 }
             }
 
-            is UIState.Loading -> {
-            }
+            is UIState.Loading -> {}
         }
     }
 
@@ -80,7 +76,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     }
 
-
     private fun onHandleAdapterEvents(event: UsersAdapter.Event) {
         when (event) {
             is UsersAdapter.Event.AddFavorite -> {
@@ -97,19 +92,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
-    private val searchQueryTextListener = object : SearchView.OnQueryTextListener {
-        override fun onQueryTextSubmit(query: String?): Boolean {
-            return true
-        }
-
-        override fun onQueryTextChange(newText: String?): Boolean {
-            viewModel.searchUsers(newText.orEmpty())
-            return true
-        }
-    }
-
     override fun onDestroyView() {
         binding.usersRecyclerView.detach()
         super.onDestroyView()
     }
+
 }

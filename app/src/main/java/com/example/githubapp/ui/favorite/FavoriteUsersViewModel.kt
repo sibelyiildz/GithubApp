@@ -1,4 +1,4 @@
-package com.example.githubapp.ui.home
+package com.example.githubapp.ui.favorite
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.githubapp.domain.model.UserItemModel
 import com.example.githubapp.domain.usecase.AddFavoriteUseCase
 import com.example.githubapp.domain.usecase.DeleteFavoriteUseCase
-import com.example.githubapp.domain.usecase.SearchUsersUseCase
+import com.example.githubapp.domain.usecase.GetFavoriteUsersUseCase
 import com.example.githubapp.extension.setThreadingValue
 import com.example.githubapp.extension.toLiveData
 import com.example.githubapp.util.Result
@@ -16,35 +16,34 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val searchUsersUseCase: SearchUsersUseCase,
+class FavoriteUsersViewModel @Inject constructor(
+    private val getFavoriteUsersUseCase: GetFavoriteUsersUseCase,
     private val addFavoriteUseCase: AddFavoriteUseCase,
     private val deleteFavoriteUseCase: DeleteFavoriteUseCase,
 ) : ViewModel() {
 
-    private val _users = MutableLiveData<UIState<List<UserItemModel>>>()
-    val users = _users.toLiveData()
+    private val _favoriteUsers = MutableLiveData<UIState<List<UserItemModel>>>()
+    val favoriteUsers = _favoriteUsers.toLiveData()
 
     private val _userFavoriteTransactions = MutableLiveData<UIState<Pair<UserItemModel, Boolean>>>()
     val userFavoriteTransactions = _userFavoriteTransactions.toLiveData()
 
-    fun searchUsers(keyword: String) {
-        _users.setThreadingValue(UIState.Loading)
-        if (keyword.isNotEmpty()) {
-            viewModelScope.launch {
-                when (val response =
-                    searchUsersUseCase.execute(SearchUsersUseCase.Request(keyword = keyword))) {
-                    is Result.Success -> {
-                        _users.setThreadingValue(UIState.Success(response.data))
-                    }
+    init {
+        fetchFavoriteUsers()
+    }
 
-                    is Result.Failure -> {
-                        _users.setThreadingValue(UIState.Error(response.error))
-                    }
+    private fun fetchFavoriteUsers() {
+        _favoriteUsers.setThreadingValue(UIState.Loading)
+        viewModelScope.launch {
+            when (val response = getFavoriteUsersUseCase.execute(Unit)) {
+                is Result.Success -> {
+                    _favoriteUsers.setThreadingValue(UIState.Success(response.data))
+                }
+
+                is Result.Failure -> {
+                    _favoriteUsers.setThreadingValue(UIState.Error(response.error))
                 }
             }
-        } else {
-            _users.setThreadingValue(UIState.Success(arrayListOf()))
         }
     }
 

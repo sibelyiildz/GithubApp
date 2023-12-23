@@ -7,15 +7,31 @@
     android:orientation="vertical"
     tools:context=".ui.home.HomeFragment">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
-        style="@style/Github.SearchView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/horizontal_margin"
-        app:iconifiedByDefault="false"
-        app:layout="@layout/layout_search"
-        app:queryHint="@string/search_view_hint" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            style="@style/Github.SearchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/horizontal_margin"
+            android:layout_weight="1"
+            app:iconifiedByDefault="false"
+            app:layout="@layout/layout_search"
+            app:queryHint="@string/search_view_hint" />
+
+        <TextView
+            android:id="@+id/favoritesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin4"
+            android:padding="@dimen/margin4"
+            android:text="Favorites" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/usersRecyclerView"

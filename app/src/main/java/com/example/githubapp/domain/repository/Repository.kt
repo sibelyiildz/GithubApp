@@ -10,4 +10,8 @@ interface Repository {
     suspend fun getUserDetail(username: String): UserDetailModel
 
     suspend fun insertFavorite(userItemModel: UserItemModel)
+
+    suspend fun deleteFavorite(userItemModel: UserItemModel)
+
+    suspend fun getAllFavoriteUsers(): List<UserItemModel>
 }
