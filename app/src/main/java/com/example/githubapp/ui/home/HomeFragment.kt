@@ -1,10 +1,11 @@
 package com.example.githubapp.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.githubapp.NavGraphDirections
 import com.example.githubapp.base.BaseFragment
 import com.example.githubapp.databinding.FragmentHomeBinding
 import com.example.githubapp.domain.model.UserItemModel
@@ -42,7 +43,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setLoading(response is UIState.Loading)
         when (response) {
             is UIState.Success -> {
-                Log.v("LogTag", "response -> ${response.data}")
                 adapter.submitList(response.data)
             }
 
@@ -50,11 +50,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 errorDialog {
                     setMessage(response.error.message)
                 }
-                Log.v("LogTag", "Failure -> ${response.error}")
             }
 
             is UIState.Loading -> {
-                Log.v("LogTag", "Loading ")
             }
         }
     }
@@ -88,6 +86,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
             is UsersAdapter.Event.RemoveFavorite -> {
                 viewModel.remoteUserFromFavorite(event.user)
+            }
+
+            is UsersAdapter.Event.ItemClick -> {
+                findNavController().navigate(NavGraphDirections.actionUserDetailFragment(username = event.username))
             }
         }
     }

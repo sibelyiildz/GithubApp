@@ -2,9 +2,11 @@ package com.example.githubapp.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.githubapp.NavGraphDirections
 import com.example.githubapp.R
 import com.example.githubapp.databinding.ListItemUserBinding
 import com.example.githubapp.domain.model.UserItemModel
@@ -68,6 +70,9 @@ class UsersAdapter(private val events: (Event) -> Unit) :
                         )
                     )
                 }
+                root.setOnClickListener {
+                    events.invoke(Event.ItemClick(data.login))
+                }
             }
         }
     }
@@ -75,5 +80,6 @@ class UsersAdapter(private val events: (Event) -> Unit) :
     sealed class Event {
         data class AddFavorite(val user: UserItemModel) : Event()
         data class RemoveFavorite(val user: UserItemModel) : Event()
+        data class ItemClick(val username: String) : Event()
     }
 }

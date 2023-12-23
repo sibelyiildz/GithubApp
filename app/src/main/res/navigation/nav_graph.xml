@@ -11,5 +11,18 @@
         android:name="com.example.githubapp.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/userDetailFragment"
+        android:name="com.example.githubapp.ui.detail.UserDetailFragment"
+        android:label="fragment_user_detail"
+        tools:layout="@layout/fragment_user_detail">
+        <argument
+            android:name="username"
+            app:argType="string" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_userDetailFragment"
+        app:destination="@id/userDetailFragment" />
 
 </navigation>

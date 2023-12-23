@@ -1,6 +1,6 @@
 package com.example.githubapp.data.remote.service
 
-import com.example.githubapp.data.remote.model.SearchDetailResponse
+import com.example.githubapp.data.remote.model.UserDetailResponse
 import com.example.githubapp.data.remote.model.SearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,5 +14,5 @@ interface Api {
     ): SearchResponse
 
     @GET("users/{username}")
-    suspend fun getUserDetail(@Path("username") userName: String): SearchDetailResponse
+    suspend fun getUserDetail(@Path("username") userName: String): UserDetailResponse
 }

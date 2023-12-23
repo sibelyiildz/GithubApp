@@ -2,7 +2,7 @@ package com.example.githubapp.data.repository
 
 import com.example.githubapp.data.local.LocalDataSource
 import com.example.githubapp.data.remote.RemoteDataSource
-import com.example.githubapp.data.remote.model.SearchDetailResponse
+import com.example.githubapp.domain.model.UserDetailModel
 import com.example.githubapp.domain.model.UserItemModel
 import com.example.githubapp.domain.repository.Repository
 import javax.inject.Inject
@@ -16,7 +16,7 @@ class RepositoryImp @Inject constructor(
         return remoteDataSource.getUsers(keyword)
     }
 
-    override suspend fun getUserDetail(username: String): SearchDetailResponse {
+    override suspend fun getUserDetail(username: String): UserDetailModel {
         return remoteDataSource.getUserDetail(username)
     }
 
