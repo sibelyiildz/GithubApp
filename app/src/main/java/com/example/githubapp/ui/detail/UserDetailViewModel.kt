@@ -21,7 +21,7 @@ class UserDetailViewModel @Inject constructor(
     private val _userDetail = MutableLiveData<UIState<UserDetailModel>>()
     val userDetail = _userDetail.toLiveData()
 
-    fun addUserToFavorite(username: String) {
+    fun fetchUserDetail(username: String) {
         _userDetail.setThreadingValue(UIState.Loading)
         viewModelScope.launch {
             when (val response =
