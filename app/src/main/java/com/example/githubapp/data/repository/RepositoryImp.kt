@@ -21,6 +21,10 @@ class RepositoryImp @Inject constructor(
         } catch (e: Exception) {
             Log.v("LogTag", "$e")
         }
+        val favorites = localDataSource.getAllFavoriteUsers()
+        users = users.map {
+            it.copy(isFavorite = favorites.find { favorite -> favorite.id == it.id } != null)
+        }
         localDataSource.insertAllUsers(users)
         return localDataSource.getUsers(keyword)
     }
@@ -32,8 +36,10 @@ class RepositoryImp @Inject constructor(
         } catch (e: Exception) {
             Log.v("LogTag", "$e")
         }
+
         userDetail?.let {
-            localDataSource.insertUserDetail(it)
+            val favorites = localDataSource.getAllFavoriteUsers()
+            localDataSource.insertUserDetail(it.copy(isFavorite = favorites.find { favorite -> favorite.id == it.id } != null))
         }
         return localDataSource.getUserDetail(username)
     }

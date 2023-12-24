@@ -12,13 +12,13 @@ import com.example.githubapp.data.local.entity.UserItemEntity
 @Dao
 interface GithubDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllUsers(userItems: List<UserItemEntity>)
 
     @Query("SELECT * from UserItemEntity WHERE login LIKE '%' || :username || '%'")
     suspend fun getUsers(username: String): List<UserItemEntity>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUserDetail(userDetail: UserDetailEntity)
 
     @Query("select * from UserDetailEntity WHERE login = :username")
