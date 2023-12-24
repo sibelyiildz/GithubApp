@@ -23,6 +23,9 @@ fun UserDetailModel.toUserDetailEntity() = UserDetailEntity(
     name = name,
     company = company,
     bio = bio,
+    blog = blog,
+    followers = followers,
+    following = following,
     isFavorite = isFavorite
 )
 
@@ -33,5 +36,8 @@ fun UserDetailEntity.toUserDetailModel() = UserDetailModel(
     name = name,
     company = company,
     bio = bio,
+    blog = blog,
+    followers = followers,
+    following = following,
     isFavorite = isFavorite
 )

@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:divider="@drawable/divider_margin_12"
     android:orientation="vertical"
     android:padding="@dimen/vertical_margin"
+    android:showDividers="middle"
     tools:context=".ui.detail.UserDetailFragment">
 
     <LinearLayout
@@ -24,7 +26,7 @@
             tools:src="@color/grey" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -34,7 +36,7 @@
                 android:id="@+id/userName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/Github.TextAppearance.Bold.12"
+                android:textAppearance="@style/Github.TextAppearance.Bold.18"
                 android:textColor="@color/soft_black"
                 tools:text="User Name" />
 
@@ -42,7 +44,7 @@
                 android:id="@+id/userNickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/Github.TextAppearance.Regular.12"
+                android:textAppearance="@style/Github.TextAppearance.Regular.16"
                 android:textColor="@color/soft_black"
                 tools:text="User Id" />
         </LinearLayout>
@@ -54,5 +56,33 @@
             android:src="@drawable/ic_star"
             tools:ignore="ContentDescription" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/bio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Github.TextAppearance.Regular.16"
+        android:textColor="@color/soft_black"
+        tools:text="Bio" />
+
+    <TextView
+        android:id="@+id/blog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/margin8"
+        android:textAppearance="@style/Github.TextAppearance.Regular.14"
+        android:textColor="@color/blue"
+        app:drawableStartCompat="@drawable/ic_link"
+        tools:text="Blog Link" />
+
+    <TextView
+        android:id="@+id/followersAndFollowing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/margin8"
+        android:textAppearance="@style/Github.TextAppearance.Regular.14"
+        android:textColor="@color/soft_black"
+        app:drawableStartCompat="@drawable/ic_people"
+        tools:text="Blog Link" />
 
 </LinearLayout>

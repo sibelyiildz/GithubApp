@@ -3,4 +3,6 @@
     <string name="error">Error</string>
     <string name="okay">Okay</string>
     <string name="search_view_hint">Search User</string>
+    <string name="followers">followers</string>
+    <string name="following">following</string>
 </resources>

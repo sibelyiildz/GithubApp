@@ -1,7 +1,7 @@
 package com.example.githubapp.ui.detail
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -15,7 +15,9 @@ import com.example.githubapp.databinding.FragmentUserDetailBinding
 import com.example.githubapp.domain.model.UserDetailModel
 import com.example.githubapp.extension.errorDialog
 import com.example.githubapp.extension.getDrawable
+import com.example.githubapp.extension.openUrl
 import com.example.githubapp.extension.setImageUrl
+import com.example.githubapp.extension.setTextAndUnderLineSpan
 import com.example.githubapp.util.UIState
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -55,19 +57,15 @@ class UserDetailFragment :
                 response.data?.let {
                     setupUI(it)
                 }
-                Log.v("LogTag", "Success -> ${response.data}")
             }
 
             is UIState.Error -> {
                 errorDialog {
                     setMessage(response.error.message)
                 }
-                Log.v("LogTag", "Error")
             }
 
-            is UIState.Loading -> {
-                Log.v("LogTag", "Loading")
-            }
+            is UIState.Loading -> {}
         }
     }
 
@@ -97,6 +95,7 @@ class UserDetailFragment :
     }
 
 
+    @SuppressLint("SetTextI18n")
     private fun setupUI(response: UserDetailModel) {
         with(binding) {
             userImage.setImageUrl(requireContext(), response.avatarUrl)
@@ -107,6 +106,16 @@ class UserDetailFragment :
                     R.drawable.ic_star
                 )
             )
+            bio.text = response.bio
+            blog.setTextAndUnderLineSpan(response.blog)
+            followersAndFollowing.text =
+                "${response.followers} ${getString(R.string.followers)} -" +
+                        " ${response.following}  ${getString(R.string.followers)}"
+
+            blog.setOnClickListener {
+                response.blog?.openUrl(requireContext())
+            }
+
             favoriteIcon.setOnClickListener {
                 if (response.isFavorite) {
                     viewModel.remoteUserFromFavorite(response)

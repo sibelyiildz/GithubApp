@@ -20,6 +20,9 @@ fun UserDetailResponse.toUserDetailModel() = UserDetailModel(
     name = name,
     company = company,
     bio = bio,
+    blog = blog,
+    followers = followers,
+    following = following,
     isFavorite = isFavorite
 )
 

@@ -10,6 +10,7 @@ import com.example.githubapp.domain.usecase.DeleteFavoriteUseCase
 import com.example.githubapp.domain.usecase.GetUserDetailUseCase
 import com.example.githubapp.extension.setThreadingValue
 import com.example.githubapp.extension.toLiveData
+import com.example.githubapp.extension.toSingleEvent
 import com.example.githubapp.util.Result
 import com.example.githubapp.util.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +28,7 @@ class UserDetailViewModel @Inject constructor(
     val userDetail = _userDetail.toLiveData()
 
     private val _userFavoriteTransactions = MutableLiveData<UIState<Boolean>>()
-    val userFavoriteTransactions = _userFavoriteTransactions.toLiveData()
+    val userFavoriteTransactions = _userFavoriteTransactions.toSingleEvent()
 
 
     fun fetchUserDetail(username: String) {
