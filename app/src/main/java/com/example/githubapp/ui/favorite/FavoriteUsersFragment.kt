@@ -2,6 +2,7 @@ package com.example.githubapp.ui.favorite
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.githubapp.NavGraphDirections
@@ -46,7 +47,11 @@ class FavoriteUsersFragment :
         setLoading(response is UIState.Loading)
         when (response) {
             is UIState.Success -> {
-                adapter.submitList(response.data)
+                response.data?.let {
+                    adapter.submitList(it)
+                    binding.noData.isVisible = it.isEmpty()
+                    binding.usersRecyclerView.isVisible = it.isNotEmpty()
+                }
             }
 
             is UIState.Error -> {
