@@ -3,8 +3,8 @@ package com.example.githubapp.ui.detail
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.githubapp.domain.mapper.toUserItemModel
 import com.example.githubapp.domain.model.UserDetailModel
-import com.example.githubapp.domain.model.UserItemModel
 import com.example.githubapp.domain.usecase.AddFavoriteUseCase
 import com.example.githubapp.domain.usecase.DeleteFavoriteUseCase
 import com.example.githubapp.domain.usecase.GetUserDetailUseCase
@@ -26,7 +26,7 @@ class UserDetailViewModel @Inject constructor(
     private val _userDetail = MutableLiveData<UIState<UserDetailModel>>()
     val userDetail = _userDetail.toLiveData()
 
-    private val _userFavoriteTransactions = MutableLiveData<UIState<Pair<UserItemModel, Boolean>>>()
+    private val _userFavoriteTransactions = MutableLiveData<UIState<Boolean>>()
     val userFavoriteTransactions = _userFavoriteTransactions.toLiveData()
 
 
@@ -46,13 +46,13 @@ class UserDetailViewModel @Inject constructor(
         }
     }
 
-    fun addUserToFavorite(user: UserItemModel) {
+    fun addUserToFavorite(user: UserDetailModel) {
         _userFavoriteTransactions.setThreadingValue(UIState.Loading)
         viewModelScope.launch {
             when (val response =
-                addFavoriteUseCase.execute(AddFavoriteUseCase.Request(userItem = user))) {
+                addFavoriteUseCase.execute(AddFavoriteUseCase.Request(userItem = user.toUserItemModel()))) {
                 is Result.Success -> {
-                    _userFavoriteTransactions.setThreadingValue(UIState.Success(Pair(user, true)))
+                    _userFavoriteTransactions.setThreadingValue(UIState.Success(true))
                 }
 
                 is Result.Failure -> {
@@ -62,13 +62,13 @@ class UserDetailViewModel @Inject constructor(
         }
     }
 
-    fun remoteUserFromFavorite(user: UserItemModel) {
+    fun remoteUserFromFavorite(user: UserDetailModel) {
         _userFavoriteTransactions.setThreadingValue(UIState.Loading)
         viewModelScope.launch {
             when (val response =
-                deleteFavoriteUseCase.execute(DeleteFavoriteUseCase.Request(userItem = user))) {
+                deleteFavoriteUseCase.execute(DeleteFavoriteUseCase.Request(userItem = user.toUserItemModel()))) {
                 is Result.Success -> {
-                    _userFavoriteTransactions.setThreadingValue(UIState.Success(Pair(user, false)))
+                    _userFavoriteTransactions.setThreadingValue(UIState.Success(false))
                 }
 
                 is Result.Failure -> {

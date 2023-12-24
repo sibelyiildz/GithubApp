@@ -24,7 +24,7 @@ interface GithubDao {
     @Query("select * from UserDetailEntity WHERE login = :username")
     suspend fun getUserDetail(username: String): UserDetailEntity
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavorite(favoriteEntity: FavoriteEntity)
 
     @Delete

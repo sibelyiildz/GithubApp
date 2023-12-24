@@ -20,5 +20,8 @@ fun UserDetailResponse.toUserDetailModel() = UserDetailModel(
     name = name,
     company = company,
     bio = bio,
-    isFavorite= isFavorite
+    isFavorite = isFavorite
 )
+
+fun UserDetailModel.toUserItemModel() =
+    UserItemModel(login = login, id = id, avatarUrl = avatarUrl, isFavorite = isFavorite)
