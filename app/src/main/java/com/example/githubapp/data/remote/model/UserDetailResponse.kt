@@ -10,4 +10,5 @@ data class UserDetailResponse(
     val name: String?,
     val company: String?,
     val bio: String?,
+    val isFavorite: Boolean = false
 )

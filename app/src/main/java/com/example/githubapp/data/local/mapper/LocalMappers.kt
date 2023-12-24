@@ -1,7 +1,9 @@
 package com.example.githubapp.data.local.mapper
 
 import com.example.githubapp.data.local.entity.FavoriteEntity
+import com.example.githubapp.data.local.entity.UserDetailEntity
 import com.example.githubapp.data.local.entity.UserItemEntity
+import com.example.githubapp.domain.model.UserDetailModel
 import com.example.githubapp.domain.model.UserItemModel
 
 
@@ -13,3 +15,23 @@ fun UserItemModel.toUserItemEntity() =
 
 fun UserItemEntity.toUserItemModel() =
     UserItemModel(id = id, login = login, avatarUrl = avatarUrl, isFavorite = isFavorite)
+
+fun UserDetailModel.toUserDetailEntity() = UserDetailEntity(
+    id = id,
+    login = login,
+    avatarUrl = avatarUrl,
+    name = name,
+    company = company,
+    bio = bio,
+    isFavorite = isFavorite
+)
+
+fun UserDetailEntity.toUserDetailModel() = UserDetailModel(
+    id = id,
+    login = login,
+    avatarUrl = avatarUrl,
+    name = name,
+    company = company,
+    bio = bio,
+    isFavorite = isFavorite
+)

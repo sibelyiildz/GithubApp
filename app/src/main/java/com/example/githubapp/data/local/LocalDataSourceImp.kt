@@ -2,9 +2,12 @@ package com.example.githubapp.data.local
 
 import com.example.githubapp.data.local.dao.GithubDao
 import com.example.githubapp.data.local.mapper.toFavoriteEntity
+import com.example.githubapp.data.local.mapper.toUserDetailEntity
+import com.example.githubapp.data.local.mapper.toUserDetailModel
 import com.example.githubapp.data.local.mapper.toUserItemEntity
 import com.example.githubapp.data.local.mapper.toUserItemModel
 import com.example.githubapp.domain.mapper.toUserItemModel
+import com.example.githubapp.domain.model.UserDetailModel
 import com.example.githubapp.domain.model.UserItemModel
 import javax.inject.Inject
 
@@ -16,6 +19,14 @@ class LocalDataSourceImp @Inject constructor(private val githubDao: GithubDao) :
 
     override suspend fun getUsers(userName: String): List<UserItemModel> {
         return githubDao.getUsers(userName).map { it.toUserItemModel() }
+    }
+
+    override suspend fun insertUserDetail(userDetail: UserDetailModel) {
+        githubDao.insertUserDetail(userDetail.toUserDetailEntity())
+    }
+
+    override suspend fun getUserDetail(username: String): UserDetailModel {
+        return githubDao.getUserDetail(username).toUserDetailModel()
     }
 
     override suspend fun insertFavorite(userItemModel: UserItemModel) {

@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.githubapp.data.local.entity.FavoriteEntity
+import com.example.githubapp.data.local.entity.UserDetailEntity
 import com.example.githubapp.data.local.entity.UserItemEntity
 
 @Dao
@@ -16,6 +17,12 @@ interface GithubDao {
 
     @Query("SELECT * from UserItemEntity WHERE login LIKE '%' || :username || '%'")
     suspend fun getUsers(username: String): List<UserItemEntity>
+
+    @Insert
+    suspend fun insertUserDetail(userDetail: UserDetailEntity)
+
+    @Query("select * from UserDetailEntity WHERE login = :username")
+    suspend fun getUserDetail(username: String): UserDetailEntity
 
     @Insert
     suspend fun insertFavorite(favoriteEntity: FavoriteEntity)

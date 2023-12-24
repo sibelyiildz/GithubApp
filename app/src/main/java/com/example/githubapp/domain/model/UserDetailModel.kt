@@ -7,4 +7,5 @@ data class UserDetailModel(
     val name: String?,
     val company: String?,
     val bio: String?,
+    val isFavorite: Boolean,
 )

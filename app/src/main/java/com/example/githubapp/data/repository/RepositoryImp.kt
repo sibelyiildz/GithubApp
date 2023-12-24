@@ -26,7 +26,16 @@ class RepositoryImp @Inject constructor(
     }
 
     override suspend fun getUserDetail(username: String): UserDetailModel {
-        return remoteDataSource.getUserDetail(username)
+        var userDetail: UserDetailModel? = null
+        try {
+            userDetail = remoteDataSource.getUserDetail(username)
+        } catch (e: Exception) {
+            Log.v("LogTag", "$e")
+        }
+        userDetail?.let {
+            localDataSource.insertUserDetail(it)
+        }
+        return localDataSource.getUserDetail(username)
     }
 
     override suspend fun insertFavorite(userItemModel: UserItemModel) {
