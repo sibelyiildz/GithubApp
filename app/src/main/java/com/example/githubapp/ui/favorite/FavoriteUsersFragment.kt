@@ -12,6 +12,7 @@ import com.example.githubapp.extension.attach
 import com.example.githubapp.extension.detach
 import com.example.githubapp.extension.errorDialog
 import com.example.githubapp.extension.linearDivider
+import com.example.githubapp.ui.detail.UserDetailFragment
 import com.example.githubapp.ui.home.UsersAdapter
 import com.example.githubapp.util.UIState
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +34,11 @@ class FavoriteUsersFragment :
     }
 
     private fun initialize() {
+        UserDetailFragment.setFragmentResultListener(this) {
+            if (it.not()) {
+                viewModel.refreshFavorites()
+            }
+        }
         binding.usersRecyclerView.attach(adapter, itemDecoration)
     }
 

@@ -62,4 +62,8 @@ class FavoriteUsersViewModel @Inject constructor(
         }
     }
 
+    fun refreshFavorites() {
+        fetchFavoriteUsers()
+    }
+
 }
