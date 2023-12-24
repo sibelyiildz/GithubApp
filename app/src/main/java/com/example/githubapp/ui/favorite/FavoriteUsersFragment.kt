@@ -29,10 +29,7 @@ class FavoriteUsersFragment :
         initialize()
 
         viewModel.favoriteUsers.observe(viewLifecycleOwner, ::favoriteUsersObserver)
-        viewModel.userFavoriteTransactions.observe(
-            viewLifecycleOwner,
-            ::userFavoriteTransactionsObserver
-        )
+        viewModel.removeFavoriteError.observe(viewLifecycleOwner, ::removeFavoriteErrorObserver)
     }
 
     private fun initialize() {
@@ -56,30 +53,16 @@ class FavoriteUsersFragment :
         }
     }
 
-    private fun userFavoriteTransactionsObserver(response: UIState<Pair<UserItemModel, Boolean>>) {
-        setLoading(response is UIState.Loading)
-        when (response) {
-            is UIState.Success -> {
-                response.data?.let {
-                    adapter.updateItem(it.first, it.second)
-                }
-            }
-
-            is UIState.Error -> {
-                errorDialog {
-                    setMessage(response.error.message)
-                }
-            }
-
-            is UIState.Loading -> {}
+    private fun removeFavoriteErrorObserver(errorMessage: String) {
+        errorDialog {
+            setMessage(errorMessage)
         }
-
     }
 
     private fun onHandleAdapterEvents(event: UsersAdapter.Event) {
         when (event) {
             is UsersAdapter.Event.AddFavorite -> {
-                viewModel.addUserToFavorite(event.user)
+                //unnecessary for this page
             }
 
             is UsersAdapter.Event.RemoveFavorite -> {

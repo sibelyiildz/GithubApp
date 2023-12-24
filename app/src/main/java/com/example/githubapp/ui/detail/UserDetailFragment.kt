@@ -33,7 +33,9 @@ class UserDetailFragment :
         setLoading(response is UIState.Loading)
         when (response) {
             is UIState.Success -> {
-                response.data?.let { setupUI(it) }
+                response.data?.let {
+                    setupUI(it)
+                }
                 Log.v("LogTag", "Success -> ${response.data}")
             }
 
