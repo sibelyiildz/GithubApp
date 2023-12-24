@@ -1,11 +1,10 @@
 package com.example.githubapp.data.local
 
 import com.example.githubapp.data.local.dao.GithubDao
-import com.example.githubapp.data.local.mapper.toFavoriteEntity
-import com.example.githubapp.data.local.mapper.toUserDetailEntity
-import com.example.githubapp.data.local.mapper.toUserDetailModel
-import com.example.githubapp.data.local.mapper.toUserItemEntity
-import com.example.githubapp.data.local.mapper.toUserItemModel
+import com.example.githubapp.domain.mapper.toFavoriteEntity
+import com.example.githubapp.domain.mapper.toUserDetailEntity
+import com.example.githubapp.domain.mapper.toUserDetailModel
+import com.example.githubapp.domain.mapper.toUserItemEntity
 import com.example.githubapp.domain.mapper.toUserItemModel
 import com.example.githubapp.domain.model.UserDetailModel
 import com.example.githubapp.domain.model.UserItemModel

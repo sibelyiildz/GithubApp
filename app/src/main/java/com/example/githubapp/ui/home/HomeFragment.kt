@@ -13,6 +13,7 @@ import com.example.githubapp.extension.attach
 import com.example.githubapp.extension.detach
 import com.example.githubapp.extension.errorDialog
 import com.example.githubapp.extension.linearDivider
+import com.example.githubapp.ui.adapter.UsersAdapter
 import com.example.githubapp.util.UIState
 import dagger.hilt.android.AndroidEntryPoint
 
