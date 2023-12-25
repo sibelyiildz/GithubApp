@@ -13,21 +13,14 @@ class RepositoryImp @Inject constructor(
 ) : Repository {
 
     override suspend fun getUsers(keyword: String): List<UserItemModel> {
-        var users = remoteDataSource.getUsers(keyword)
-        val favorites = localDataSource.getAllFavoriteUsers()
-        users = users.map {
-            it.copy(isFavorite = favorites.find { favorite -> favorite.id == it.id } != null)
-        }
+        val users = remoteDataSource.getUsers(keyword)
         localDataSource.insertAllUsers(users)
         return localDataSource.getUsers(keyword)
     }
 
     override suspend fun getUserDetail(username: String): UserDetailModel {
-        val userDetail: UserDetailModel? = remoteDataSource.getUserDetail(username)
-        userDetail?.let {
-            val favorites = localDataSource.getAllFavoriteUsers()
-            localDataSource.insertUserDetail(it.copy(isFavorite = favorites.find { favorite -> favorite.id == it.id } != null))
-        }
+        val user = remoteDataSource.getUserDetail(username)
+        user?.let { localDataSource.insertUserDetail(it) }
         return localDataSource.getUserDetail(username)
     }
 
