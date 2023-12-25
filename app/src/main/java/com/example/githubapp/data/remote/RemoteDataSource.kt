@@ -7,5 +7,5 @@ interface RemoteDataSource {
 
     suspend fun getUsers(keyword: String): List<UserItemModel>
 
-    suspend fun getUserDetail(username: String): UserDetailModel
+    suspend fun getUserDetail(username: String): UserDetailModel?
 }

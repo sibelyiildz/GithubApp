@@ -9,11 +9,19 @@ import javax.inject.Inject
 
 class RemoteDataSourceImp @Inject constructor(private val api: Api) : RemoteDataSource {
     override suspend fun getUsers(keyword: String): List<UserItemModel> {
-        return api.getUsers(keyword).items.map { it.toUserItemModel() }
+        return try {
+            api.getUsers(keyword).items.map { it.toUserItemModel() }
+        } catch (e: Exception) {
+            listOf()
+        }
     }
 
-    override suspend fun getUserDetail(username: String): UserDetailModel {
-        return api.getUserDetail(username).toUserDetailModel()
+    override suspend fun getUserDetail(username: String): UserDetailModel? {
+        return try {
+            api.getUserDetail(username).toUserDetailModel()
+        } catch (e: Exception) {
+            null
+        }
     }
 
 }
