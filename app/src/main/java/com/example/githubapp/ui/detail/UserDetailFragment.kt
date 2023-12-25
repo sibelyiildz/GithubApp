@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.githubapp.R
 import com.example.githubapp.base.BaseFragment
@@ -41,6 +42,8 @@ class UserDetailFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
 
         viewModel.fetchUserDetail(args.username)
         viewModel.userDetail.observe(viewLifecycleOwner, ::userDetailObserver)

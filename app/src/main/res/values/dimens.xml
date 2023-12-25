@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="toolbar_height">50dp</dimen>
     <dimen name="horizontal_margin">@dimen/margin16</dimen>
     <dimen name="vertical_margin">@dimen/margin12</dimen>
 
