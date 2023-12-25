@@ -29,7 +29,6 @@ class HomeViewModel @Inject constructor(
     val userFavoriteTransactions = _userFavoriteTransactions.toLiveData()
 
     fun searchUsers(keyword: String) {
-        _users.setThreadingValue(UIState.Loading)
         if (keyword.isNotEmpty()) {
             viewModelScope.launch {
                 when (val response =

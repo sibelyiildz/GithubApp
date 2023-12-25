@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:icon="@drawable/ic_no_data"
-            app:message="@string/no_date_message" />
+            app:message="@string/no_data_message" />
     </FrameLayout>
 
 </LinearLayout>
