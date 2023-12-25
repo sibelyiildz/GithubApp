@@ -5,62 +5,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:divider="@drawable/divider_margin_12"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="@dimen/vertical_margin"
     android:showDividers="middle"
     tools:context=".ui.detail.UserDetailFragment">
 
-    <LinearLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@drawable/divider_margin_12"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:showDividers="middle">
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/userImage"
-            android:layout_width="@dimen/margin60"
-            android:layout_height="@dimen/margin60"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.ShapeableImageView.Circle"
-            tools:src="@color/grey" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/userName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/Github.TextAppearance.Bold.18"
-                android:textColor="@color/soft_black"
-                tools:text="User Name" />
-
-            <TextView
-                android:id="@+id/userNickname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/Github.TextAppearance.Regular.16"
-                android:textColor="@color/soft_black"
-                tools:text="User Id" />
-        </LinearLayout>
+        app:navigationIcon="@drawable/ic_back">
 
         <ImageView
             android:id="@+id/favoriteIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:padding="@dimen/margin12"
             android:src="@drawable/ic_star"
             tools:ignore="ContentDescription" />
-    </LinearLayout>
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/userImage"
+        android:layout_width="@dimen/margin100"
+        android:layout_height="@dimen/margin100"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.ShapeableImageView.Circle"
+        tools:src="@color/grey" />
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textAppearance="@style/Github.TextAppearance.Bold.18"
+        android:textColor="@color/soft_black"
+        tools:text="User Name" />
+
+    <TextView
+        android:id="@+id/userNickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textAppearance="@style/Github.TextAppearance.Regular.16"
+        android:textColor="@color/soft_black"
+        tools:text="User Id" />
 
     <TextView
         android:id="@+id/bio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/horizontal_margin"
         android:textAppearance="@style/Github.TextAppearance.Regular.16"
         android:textColor="@color/soft_black"
         tools:text="Bio" />
@@ -70,6 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawablePadding="@dimen/margin8"
+        android:paddingHorizontal="@dimen/horizontal_margin"
         android:textAppearance="@style/Github.TextAppearance.Regular.14"
         android:textColor="@color/blue"
         app:drawableStartCompat="@drawable/ic_link"
@@ -80,6 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawablePadding="@dimen/margin8"
+        android:paddingHorizontal="@dimen/horizontal_margin"
         android:textAppearance="@style/Github.TextAppearance.Regular.14"
         android:textColor="@color/soft_black"
         app:drawableStartCompat="@drawable/ic_people"

@@ -17,7 +17,9 @@ class LocalDataSourceImp @Inject constructor(private val githubDao: GithubDao) :
     }
 
     override suspend fun getUsers(userName: String): List<UserItemModel> {
-        return githubDao.getUsers(userName).map { it.toUserItemModel() }
+        val users = githubDao.getUsers(userName).map { it.toUserItemModel() }
+        val favorites = getAllFavoriteUsers()
+        return users.map { it.copy(isFavorite = favorites.find { favorite -> favorite.id == it.id } != null) }
     }
 
     override suspend fun insertUserDetail(userDetail: UserDetailModel) {
@@ -25,7 +27,9 @@ class LocalDataSourceImp @Inject constructor(private val githubDao: GithubDao) :
     }
 
     override suspend fun getUserDetail(username: String): UserDetailModel {
-        return githubDao.getUserDetail(username).toUserDetailModel()
+        val favorites = getAllFavoriteUsers()
+        val user = githubDao.getUserDetail(username).toUserDetailModel()
+        return user.copy(isFavorite = favorites.find { favorite -> favorite.id == user.id } != null)
     }
 
     override suspend fun insertFavorite(userItemModel: UserItemModel) {

@@ -5,5 +5,7 @@
     <string name="search_view_hint">Search User</string>
     <string name="followers">followers</string>
     <string name="following">following</string>
-    <string name="no_date_message">No favorite users yet</string>
+    <string name="no_data_message">No favorite users yet</string>
+    <string name="no_data_message_search">No results matching your search were found</string>
+    <string name="favorites">Favorites</string>
 </resources>

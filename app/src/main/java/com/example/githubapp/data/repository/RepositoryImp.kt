@@ -1,6 +1,5 @@
 package com.example.githubapp.data.repository
 
-import android.util.Log
 import com.example.githubapp.data.local.LocalDataSource
 import com.example.githubapp.data.remote.RemoteDataSource
 import com.example.githubapp.domain.model.UserDetailModel
@@ -14,33 +13,14 @@ class RepositoryImp @Inject constructor(
 ) : Repository {
 
     override suspend fun getUsers(keyword: String): List<UserItemModel> {
-        var users = listOf<UserItemModel>()
-        // TODO: try-catch yerine başka bir şey kullan
-        try {
-            users = remoteDataSource.getUsers(keyword)
-        } catch (e: Exception) {
-            Log.v("LogTag", "$e")
-        }
-        val favorites = localDataSource.getAllFavoriteUsers()
-        users = users.map {
-            it.copy(isFavorite = favorites.find { favorite -> favorite.id == it.id } != null)
-        }
+        val users = remoteDataSource.getUsers(keyword)
         localDataSource.insertAllUsers(users)
         return localDataSource.getUsers(keyword)
     }
 
     override suspend fun getUserDetail(username: String): UserDetailModel {
-        var userDetail: UserDetailModel? = null
-        try {
-            userDetail = remoteDataSource.getUserDetail(username)
-        } catch (e: Exception) {
-            Log.v("LogTag", "$e")
-        }
-
-        userDetail?.let {
-            val favorites = localDataSource.getAllFavoriteUsers()
-            localDataSource.insertUserDetail(it.copy(isFavorite = favorites.find { favorite -> favorite.id == it.id } != null))
-        }
+        val user = remoteDataSource.getUserDetail(username)
+        user?.let { localDataSource.insertUserDetail(it) }
         return localDataSource.getUserDetail(username)
     }
 

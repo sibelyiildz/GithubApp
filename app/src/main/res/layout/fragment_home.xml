@@ -16,7 +16,7 @@
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             style="@style/Github.SearchView"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/horizontal_margin"
             android:layout_weight="1"
@@ -28,16 +28,29 @@
             android:id="@+id/favoritesButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin4"
+            android:layout_marginEnd="@dimen/margin8"
             android:padding="@dimen/margin4"
-            android:text="Favorites" />
+            android:text="@string/favorites" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/usersRecyclerView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/list_item_user" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/usersRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/list_item_user" />
+
+        <com.example.githubapp.customcomponent.NoDataScreen
+            android:id="@+id/noData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:icon="@drawable/ic_no_data"
+            app:message="@string/no_data_message_search" />
+    </FrameLayout>
 
 </LinearLayout>

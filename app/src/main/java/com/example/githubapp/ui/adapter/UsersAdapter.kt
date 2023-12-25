@@ -26,7 +26,7 @@ class UsersAdapter(private val events: (Event) -> Unit) :
                 oldItem: UserItemModel,
                 newItem: UserItemModel
             ): Boolean {
-                return oldItem.isFavorite == newItem.isFavorite
+                return oldItem == newItem
             }
         }
     }
